@@ -24,27 +24,28 @@ class linke_list():
         if self.head.next is None:
             print(self.head.data)
             return self.head
+        current = self.head
         while(current):
             print(str(current.data) + " " ,end= "")
             current = current.next
 
-# ======================================= Revererse without stack ========================================= 
+#  Revererse without stack ========================================= 
 
-    # def reverse(self):
-    #     if self.head == None:
-    #         return
-    #     current = self.head
-    #     prev = None
-    #     while(current):
-    #         next_node = current.next
-    #         current.next = prev
-    #         prev = current
-    #         current = next_node
-    #         self.head = prev    
-    #     return self.head
+    def reverse(self):
+        if self.head == None:
+            return
+        current1 = self.head
+        prev = None
+        while(current1):
+            next_node = current1.next
+            current1.next = prev
+            prev = current1
+            current1 = next_node
+            self.head = prev    
+        return self.head
 
 
-# ======================================= Revererse with stack ========================================= 
+# Revererse with stack ========================================= 
 
     def reverse_with_stack(self):
         if self.head is None and self.head.next is None:
@@ -64,16 +65,15 @@ class linke_list():
             prev = prev.next
             prev = i
 
-# ======================================= Revererse using recursions ========================================= 
+# Revererse using recursions ========================================= 
 
-    
     def reverse_using_recursion(self,head):
         if head is None or head.next is None:
             return head
         head = self.reverse_using_recursion(head)
         head.next.next = head.next
         head.next = None
-        return head        
+        return head
         
 
     
@@ -81,14 +81,14 @@ class linke_list():
 
 
 linke_list = linke_list()
-# linke_list.insert_data(10)
-# linke_list.insert_data(20)
-# linke_list.insert_data(30)
-# linke_list.insert_data(40)
+linke_list.insert_data(10)
+linke_list.insert_data(20)
+linke_list.insert_data(30)
+linke_list.insert_data(40)
 # linke_list.insert_data(50)
 linke_list.travesal()
-# linke_list.reverse()
+linke_list.reverse()
 # linke_list.reverse_with_stack()
-linke_list.reverse_using_recursion(linke_list.head)
+# linke_list.reverse_using_recursion(linke_list.head)
 print("zb")
 linke_list.travesal()

@@ -49,7 +49,7 @@ class linked_list():
             print(str(current.data) + " " ,end= "")
             current = current.next
 
-# =================================== Brute Force Approch =================================================
+# Brute Force Approch =================================================
     def intersection_of_y_link_list(self,head1,head2):
         if self.head is None:
             return self.head
@@ -64,11 +64,88 @@ class linked_list():
 
         while(current2):
             if current2 in st:
-                print(current2.data)
+                print("intersect at ==> ",current2.data)
                 return current2.data
             current2 = current2.next
+        print("No intersection")
+
+#  Better solution =================================================
+    def remove_prev_node(self,head,n):
+        current = head
+        new_head = None
+        while(current):
+            if n == 0:
+                new_head = current
+                del head
+                return new_head
+            n = n-1
+            current = current.next
+
+    def better_sol_intersection(self,head1,head2):
+        if head1 is None:
+            print("no head")
+            return head1
+        if head1.next == None:
+            print("head data ",head1.data)
+            return head1.data
+
+        if head2 is None:
+            print("no head")
+            return head1
+        if head2.next == None:
+            return head1.data
+
+        count_1 = 0
+        count_2 = 0
+        current = head1
+        while(current):
+            count_1 += 1
+            current = current.next
         
+        current2 = head2
+        while(current2):
+            count_2 += 1
+            current2 = current2.next
+
+        if count_1 > count_2:
+            n = count_1 - count_2    
+            head1 = self.remove_prev_node(head1,n)
+        else:
+            n = count_2 - count_1
+            head2 = self.remove_prev_node(head2,n)
+
+        current3 = head1
+        current = head2
+        while(current3):
+            if current.next == current3.next:
+                print("Intersection point ==> ",current3.next.data)
+                return current3.next
+            current = current.next
+            current3 = current3.next    
+
+#  Better solution =================================================
+    def optimal_sol_intersection(self,head1,head2):
+        temp1 = head1
+        temp2 = head2
+
+        while temp1 != temp2:
+            if temp1 == temp2:
+                print("optimal intersection point ==> ",temp1.data)
+                return True
+            temp1 = temp1.next if temp1 else head2
+            temp2 = temp2.next if temp2 else head1
             
+        if temp1:
+            print("Optimal intersection point ==> ", temp1.data)
+            return True
+        else:
+            print("No intersection point from optimal function")
+            return False
+        # print("No intersection point from optimal function")
+        # return False
+
+
+
 
 
 linked_list = linked_list()
@@ -82,9 +159,18 @@ head1.next.next = shared
 
 head2 = node(15)
 head2.next = node(17)
-head2.next = shared
+head2.next.next = node(27)
+head2.next.next.next = node(27)
+head2.next.next.next.next = shared
 
 
 linked_list.travesal(head1)
 print("y list")
 linked_list.travesal(head2)
+
+print("intersection")
+linked_list.intersection_of_y_link_list(head1,head2)
+# linked_list.better_sol_intersection(head1,head2)
+print("optimal solution")
+linked_list.optimal_sol_intersection(head1,head2)
+print("test")
