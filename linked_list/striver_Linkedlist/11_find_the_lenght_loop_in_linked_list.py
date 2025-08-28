@@ -1,0 +1,120 @@
+# Detect Cycle in Linked List
+# Last Updated : 28 Aug, 2025
+# Given the head of a singly linked list, determine whether the list contains a cycle.
+
+# A cycle exists if, while traversing the list through next pointers, you encounter a node that has already been visited instead of eventually reaching nullptr.
+
+# Examples:
+
+# Input: head: 1 -> 3 -> 4 -> 3
+# Output: true
+
+# 3
+ 
+# Explanation: The last node of the linked list does not point to NULL; instead, it points to an earlier node in the list, creating a cycle.
+
+# Input: head: 1 -> 8 -> 3 -> 4 -> NULL 
+# Output: false
+
+# 4-
+ 
+# Explanation: The last node of the linked list points to NULL, indicating the end of the list.
+
+class node():
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+
+class linked_list():
+    def __init__(self):
+        self.head = None
+    
+    def insert(self,data):
+        if self.head is None:
+            self.head = node(data)
+            return True
+        current = self.head
+        while(current.next):
+            current = current.next
+        current.next = node(data)
+        return self.head
+    
+    def traversal(self,head):
+        current = self.head
+        while(current):
+            print(" ===> "+ str(current.data),end="")
+            current = current.next
+        return self.head
+
+# Brute Force approch ==========================================================
+
+    def detect_cycle_and_length_of_loop_in_list(self):
+        if self.head is None:
+            return self.head
+        current = self.head
+        st = []
+        while(current):
+            if current in st:
+                print("Cycle detected of lenght ==> ",len(st)-st.index(current))
+                return self.head
+            st.append(current)
+            current = current.next
+        print("No cycle in the loop")
+        return self.head
+
+# Brute Force approch ==========================================================
+    def detect_cycle_in_list_better_solution(self):
+        if self.head is None:
+            return self.head
+        current = self.head
+        st = {}
+        count = 0
+        while(current):
+            if current in st:
+                print("Length of the loop better solution ==> ",count - st[current])         
+                return self.head
+            st[current] = count
+            current = current.next
+            count +=1
+        print("No cycle in the loop")
+        return self.head
+
+# optimal solution ==================================================
+    def detect_loop_optimal_solution(self):
+        if self.head == None:
+            print("No loop detected length is 0")
+            return self.head
+        if self.head.next is None:
+            print("No loop detected length is 0")
+            return self.head
+        ptr = ptr2 = self.head
+        count = 0
+        while(ptr2 != None and ptr2.next != None):
+            ptr = ptr.next
+            ptr2 = ptr2.next.next
+            if ptr == ptr2:
+                while ptr:
+                    ptr = ptr.next
+                    count += 1
+                    if ptr == ptr2:
+                        print(count, " == > loop lenght count")
+                        return count
+        print("no loop detected")
+        return self.head
+
+linked_list = linked_list()
+head = node(1)
+head.next = node(2)
+head.next.next = node(3)
+head.next.next.next = node(4)
+head.next.next.next.next = node(5)
+head.next.next.next.next.next = head.next
+linked_list.head = head
+
+# linked_list.traversal(head)
+head = linked_list.detect_cycle_and_length_of_loop_in_list()
+print("better solution")
+linked_list.detect_cycle_in_list_better_solution()
+print("optimal solution")
+linked_list.detect_loop_optimal_solution()
+# linked_list.traversal(head)
